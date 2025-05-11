@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prarambh's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e0a3c, #3b1a78);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 10, 60, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Home Section */
+        .home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(30,10,60,0.8) 100%);
+            z-index: -1;
+        }
+
+        .home-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .home-content img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #ffd700;
+            object-fit: cover;
+            animation: pulse 2s infinite;
+        }
+
+        .home-text h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .home-text p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .skill-card p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        /* Portfolio Section (Carousel) */
+        .portfolio-carousel {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            flex: 0 0 33.33%;
+            margin: 0 15px;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-card img,
+        .portfolio-card video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .portfolio-card p {
+            padding: 15px;
+            font-size: 1rem;
+            color: #ddd;
+            text-align: center;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-nav button {
+            background: rgba(30, 10, 60, 0.8);
+            border: none;
+            color: #ffd700;
+            font-size: 1.5rem;
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .carousel-nav button:hover {
+            color: #ffeb3b;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #ddd;
+        }
+
+        .contact-form button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background: #ffd700;
+            color: #1e0a3c;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background: #ffeb3b;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: rgba(30, 10, 60, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            color: #ffd700;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ffeb3b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px;
+            }
+
+            .navbar ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(30, 10, 60, 0.9);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .navbar ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .home-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .home-content img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .home-text h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 80px 20px;
+            }
+
+            .portfolio-card {
+                flex: 0 0 50%;
+            }
+
+            .portfolio-card img,
+            .portfolio-card video {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .home-text p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .skill-card {
+                padding: 15px;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+
+            .portfolio-card {
+                flex: 0 0 100%;
+            }
+
+            .portfolio-card img,
+            .portfolio-card video {
+                height: 150px;
+            }
+
+            .carousel-nav button {
+                font-size: 1.2rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Prarambh</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#portfolio">My Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="home">
+        <div class="home-content">
+            <div class="home-text">
+                <h1>Hi, I am Prarambh</h1>
+                <p>Creative Video Editor & Graphic Designer</p>
+            </div>
+            <img src="./ssc.png" alt="Prarambh">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <p>Hi, I am a Professional Video Editor, Graphic Designer, Logo Designer, Thumbnail Maker, and Email Copywriter. With over 6 years of experience, we provide a full pack of creative solutions tailored to your needs.</p>
+            <p>We’d love to work with you and help grow your audience. Our team can provide useful tips and strategies to increase your followers and boost engagement. We’re ready to support you and take your content to the next level, all at a very low price.</p>
+            <p>Let’s connect with us! DM us on the platforms listed below, and we’ll respond within hours to discuss further details and make it happen!</p>
+            <p><strong>Thank You! 🤍</strong></p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fas fa-video"></i>
+                <h3>Professional Video Editor</h3>
+                <p>Creating engaging videos with seamless transitions and effects using CapCut and VN.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Graphic Designer</h3>
+                <p>Designing stunning visuals and graphics using Canva and PicsArt.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Email Copywriter</h3>
+                <p>Crafting compelling email campaigns that drive engagement and conversions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Endless Carousel) -->
+    <section id="portfolio">
+        <h2>My Work</h2>
+        <div class="portfolio-carousel">
+            <div class="portfolio-track">
+                <!-- Original Cards -->
+                <div class="portfolio-card">
+                    <img src="./8.png" alt="Work Sample 1">
+                    <p>Video Thumbnail Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <video autoplay muted loop poster="./poster1.jpg">
+                        <source src="./4.MP4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Short Promo Video</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./1.png" alt="Work Sample 2">
+                    <p>Logo Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./16.jpg" alt="Work Sample 3">
+                    <p>Some More Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./13.jpg" alt="Work Sample 4">
+                    <p>Logo Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./10.png" alt="Work Sample 5">
+                    <p>YouTube Video Thumbnail</p>
+                </div>
+                <div class="portfolio-card">
+                    <video autoplay muted loop poster="./poster2.jpg">
+                        <source src="./5.MP4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Aesthetic Video</p>
+                </div>
+                <!-- Duplicated Cards for Seamless Looping -->
+                <div class="portfolio-card">
+                    <img src="./8.png" alt="Work Sample 1">
+                    <p>Video Thumbnail Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <video autoplay muted loop poster="./poster1.jpg">
+                        <source src="./4.MP4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Short Promo Video</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./1.png" alt="Work Sample 2">
+                    <p>Logo Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./16.jpg" alt="Work Sample 3">
+                    <p>Some More Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./13.jpg" alt="Work Sample 4">
+                    <p>Logo Design</p>
+                </div>
+                <div class="portfolio-card">
+                    <img src="./10.png" alt="Work Sample 5">
+                    <p>YouTube Video Thumbnail</p>
+                </div>
+                <div class="portfolio-card">
+                    <video autoplay muted loop poster="./poster2.jpg">
+                        <source src="./5.MP4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Aesthetic Video</p>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <h3>Connect With Me</h3>
+        <div class="social-links">
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navUl = document.querySelector('.navbar ul');
+
+        hamburger.addEventListener('click', () => {
+            navUl.classList.toggle('active');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('.navbar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                if (navUl.classList.contains('active')) {
+                    navUl.classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll Animation
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Page Load Animation
+        window.addEventListener('load', () => {
+            document.querySelector('.home-content').style.opacity = 0;
+            setTimeout(() => {
+                document.querySelector('.home-content').style.transition = 'opacity 1s ease';
+                document.querySelector('.home-content').style.opacity = 1;
+            }, 100);
+        });
+
+        // Endless Carousel Functionality
+        const track = document.querySelector('.portfolio-track');
+        let cards = document.querySelectorAll('.portfolio-card');
+        const prevButton = document.querySelector('.carousel-prev');
+        const nextButton = document.querySelector('.carousel-next');
+        let originalCardCount = cards.length / 2; // Assume initial cards are duplicated
+        let currentIndex = 0;
+        let cardWidth = cards[0].offsetWidth + 30; // Including margin
+        let visibleCards = window.innerWidth > 768 ? 3 : window.innerWidth > 480 ? 2 : 1;
+        let autoScroll;
+
+        // Function to update card width and visible cards
+        function updateCarouselMetrics() {
+            cards = document.querySelectorAll('.portfolio-card');
+            cardWidth = cards[0].offsetWidth + 30;
+            visibleCards = window.innerWidth > 768 ? 3 : window.innerWidth > 480 ? 2 : 1;
+            originalCardCount = cards.length / 2; // Update based on total cards (half are duplicates)
+        }
+
+        // Function to duplicate cards for seamless looping
+        function duplicateCards() {
+            const originalCards = Array.from(cards).slice(0, originalCardCount);
+            const duplicateContainer = document.createElement('div');
+            originalCards.forEach(card => {
+                duplicateContainer.appendChild(card.cloneNode(true));
+            });
+            track.appendChild(duplicateContainer);
+            updateCarouselMetrics(); // Update metrics after duplication
+        }
+
+        // Function to update carousel position
+        function updateCarousel(animate = true) {
+            track.style.transition = animate ? 'transform 0.5s ease' : 'none';
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        // Function to reset carousel for seamless looping
+        function resetToLoopPoint() {
+            if (currentIndex >= originalCardCount) {
+                currentIndex = currentIndex - originalCardCount;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                track.offsetHeight; // Force reflow
+            }
+            if (currentIndex < 0) {
+                currentIndex = currentIndex + originalCardCount;
+                track.style.transition = 'none';
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                track.offsetHeight; // Force reflow
+            }
+        }
+
+        // Function to add a new card dynamically
+        function addNewCard(imageSrc, videoSrc, description, isVideo = false, posterSrc = '') {
+            const newCard = document.createElement('div');
+            newCard.classList.add('portfolio-card');
+            
+            if (isVideo) {
+                const video = document.createElement('video');
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                if (posterSrc) video.poster = posterSrc;
+                const source = document.createElement('source');
+                source.src = videoSrc;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.innerHTML += 'Your browser does not support the video tag.';
+                newCard.appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.src = imageSrc;
+                img.alt = description;
+                newCard.appendChild(img);
+            }
+            
+            const p = document.createElement('p');
+            p.textContent = description;
+            newCard.appendChild(p);
+            
+            // Append to track before duplicates
+            track.appendChild(newCard);
+            
+            // Update original card count and re-duplicate
+            originalCardCount++;
+            const originalCards = Array.from(cards).slice(0, originalCardCount);
+            track.innerHTML = ''; // Clear track
+            originalCards.forEach(card => track.appendChild(card)); // Re-append original cards
+            duplicateCards(); // Re-duplicate for looping
+            updateCarousel(false); // Reset position without animation
+        }
+
+        // Event listeners for navigation
+        nextButton.addEventListener('click', () => {
+            currentIndex++;
+            updateCarousel();
+            setTimeout(resetToLoopPoint, 500);
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentIndex--;
+            updateCarousel();
+            setTimeout(resetToLoopPoint, 500);
+        });
+
+        // Auto-scroll from right to left every 3 seconds
+        function startAutoScroll() {
+            autoScroll = setInterval(() => {
+                currentIndex++;
+                updateCarousel();
+                setTimeout(resetToLoopPoint, 500);
+            }, 3000);
+        }
+
+        startAutoScroll();
+
+        // Pause auto-scroll on hover
+        document.querySelector('.portfolio-carousel').addEventListener('mouseenter', () => {
+            clearInterval(autoScroll);
+        });
+
+        document.querySelector('.portfolio-carousel').addEventListener('mouseleave', () => {
+            startAutoScroll();
+        });
+
+        // Update on resize
+        window.addEventListener('resize', () => {
+            const newVisibleCards = window.innerWidth > 768 ? 3 : window.innerWidth > 480 ? 2 : 1;
+            if (visibleCards !== newVisibleCards) {
+                visibleCards = newVisibleCards;
+                currentIndex = Math.min(currentIndex, originalCardCount - visibleCards);
+                if (currentIndex < 0) currentIndex = 0;
+                updateCarouselMetrics();
+                updateCarousel(false);
+            }
+        });
+
+        // Initialize carousel
+        updateCarousel(false);
+    </script>
+</body>
+</html>
